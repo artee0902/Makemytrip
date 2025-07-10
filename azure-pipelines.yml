@@ -1,0 +1,35 @@
+trigger:
+  - main  # or your branch
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+  - task: UsePythonVersion@0
+    inputs:
+      versionSpec: '3.10'
+    displayName: 'Use Python 3.10'
+
+  - script: |
+      python -m pip install --upgrade pip
+      pip install -r requirements.txt
+    displayName: 'Install dependencies'
+
+  - script: |
+      python -m playwright install --with-deps
+    displayName: 'Install Playwright browsers'
+
+  - script: |
+      pytest tests/ --alluredir=allure-results
+    displayName: 'Run tests and collect Allure results'
+
+  - script: |
+      npm install -g allure-commandline --save-dev
+      allure generate allure-results -o allure-report --clean
+    displayName: 'Generate Allure HTML report'
+
+  - task: PublishBuildArtifacts@1
+    inputs:
+      pathToPublish: 'allure-report'
+      artifactName: 'AllureReport'
+    displayName: 'Publish Allure Report as Build Artifact'
