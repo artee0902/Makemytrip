@@ -38,7 +38,8 @@ jobs:
 
       - name: Run all tests and generate Allure results
         run: |
-          pytest tests/ --alluredir=allure-results --maxfail=1 --disable-warnings -q
+          pytest tests/ --alluredir=allure-results --disable-warnings -q
+      
 
       - name: Generate Allure HTML Report
         run: |
