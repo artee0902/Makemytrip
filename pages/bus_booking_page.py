@@ -2,15 +2,24 @@ from .base_page import BasePage
 import time
 
 class BusBookingPage(BasePage):
+    # def go_to_bus_tab(self):
+    #     self.page.keyboard.press("Escape")
+    #     self.page.goto("https://www.makemytrip.com/bus-tickets/")
+    #     self.page.wait_for_load_state("networkidle")
+    #     self.page.screenshot(path="bus_page_debug.png")
+    #     self.page.wait_for_selector("#src", timeout=15000)
+
     def go_to_bus_tab(self):
         self.page.keyboard.press("Escape")
         self.page.goto("https://www.makemytrip.com/bus-tickets/")
-        self.page.wait_for_load_state("networkidle")
-        self.page.screenshot(path="bus_page_debug.png")
+        self.page.wait_for_load_state("domcontentloaded")
+        self.page.wait_for_timeout(3000)  # wait 3 sec for UI to settle
+        self.page.screenshot(path="bus_debug.png")
         self.page.wait_for_selector("#src", timeout=15000)
 
     def enter_source_destination(self, source, destination):
-        self.click("#src")
+        self.click("input[placeholder='From']")
+
         self.fill("#src", source)
         time.sleep(1)
         self.press_enter("#src")

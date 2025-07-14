@@ -4,7 +4,7 @@ from playwright.sync_api import sync_playwright
 
 @pytest.fixture(scope="session")
 def config():
-    with open("../config.json") as f:
+    with open("config.json") as f:
         return json.load(f)
 
 @pytest.fixture(scope="session")

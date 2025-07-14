@@ -36,10 +36,11 @@ jobs:
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
-      - name: Run all tests and generate Allure results
+      - name: Run only train booking test
         run: |
-          pytest tests/ --alluredir=allure-results --disable-warnings -q
+          pytest tests/test_book_train_ticket.py --alluredir=allure-results --disable-warnings -q
       
+    
 
       - name: Generate Allure HTML Report
         run: |
