@@ -36,11 +36,16 @@ jobs:
           sudo mv allure-2.27.0 /opt/allure
           sudo ln -s /opt/allure/bin/allure /usr/bin/allure
 
+      - name: "Debug - Check config.json presence"
+        run: |
+          echo "Listing files in tests folder:"
+          ls -l tests/
+          cat tests/config.json
+      
+
       - name: Run only train booking test
         run: |
           pytest tests/test_book_train_ticket.py --alluredir=allure-results --disable-warnings -q
-      
-    
 
       - name: Generate Allure HTML Report
         run: |
@@ -58,4 +63,3 @@ jobs:
         with:
           name: allure-html-report
           path: allure-report
-
