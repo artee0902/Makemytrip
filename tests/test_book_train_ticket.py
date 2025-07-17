@@ -13,7 +13,7 @@ def test_book_train_ticket(page, config):
 
 @pytest.mark.order(2)
 def test_visit_homepage(page, config):
-    page.goto(config["base_url"])
+    page.goto(config["base_url"],timeout=6000)
     expect(page).to_have_url(config["base_url"])
     expect(page.locator("li.menu_Trains")).to_be_visible()
 

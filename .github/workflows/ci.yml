@@ -41,11 +41,18 @@ jobs:
           echo "Listing files in tests folder:"
           ls -l tests/
           cat tests/config.json
-      
+
+      - name: Set headless mode for CI
+        run: echo "HEADLESS=true" >> $GITHUB_ENV
+
+      - name: Set HEADLESS True
+        run: echo "HEADLESS=true" >> $GITHUB_ENV
+
 
       - name: Run only train booking test
         run: |
           pytest tests/test_book_train_ticket.py --alluredir=allure-results --disable-warnings -q
+      
 
       - name: Generate Allure HTML Report
         run: |

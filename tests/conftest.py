@@ -3,25 +3,35 @@ import json
 import os
 from playwright.sync_api import sync_playwright
 
-# Fixture to load config.json (works in local + GitHub Actions)
 @pytest.fixture(scope="session")
 def config():
-    config_path = os.path.join(os.path.dirname(__file__), "config.json")
-    with open(config_path) as f:
+    with open("config.json") as f:
         return json.load(f)
 
-# Fixture to launch Playwright browser
 @pytest.fixture(scope="session")
 def browser():
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+        # HEADLESS is set to "true" in GitHub Actions environment
+        headless = os.getenv("HEADLESS", "true").lower() == "true"
+        browser = p.webkit.launch(
+            headless=headless,
+            args=[
+                "--no-sandbox",
+                "--disable-blink-features=AutomationControlled",
+                "--disable-gpu",
+                "--disable-dev-shm-usage",
+                "--disable-web-security"
+            ]
+        )
         yield browser
         browser.close()
 
-# Fixture to create a new page for each test
 @pytest.fixture
 def page(browser):
-    context = browser.new_context()
+    context = browser.new_context(user_agent=(
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+        "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36"
+    ))
     page = context.new_page()
     yield page
     context.close()

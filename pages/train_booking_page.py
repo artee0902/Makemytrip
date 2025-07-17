@@ -6,6 +6,7 @@ class TrainBookingPage(BasePage):
     def go_to_train_tab(self):
         self.page.keyboard.press("Escape")  # Dismiss login modal
         self.page.goto("https://www.makemytrip.com/railways/")
+
         self.page.wait_for_load_state("domcontentloaded")
         self.page.wait_for_selector("input#fromCity", timeout=15000)
 
