@@ -49,9 +49,11 @@ jobs:
         run: echo "HEADLESS=true" >> $GITHUB_ENV
 
 
-      - name: Run only train booking test
+      - name: Run All Test Cases
         run: |
-          pytest tests/test_book_train_ticket.py --alluredir=allure-results --disable-warnings -q
+          export PYTHONPATH=$(pwd)
+          pytest tests/ --alluredir=allure-results --disable-warnings -q
+      
       
 
       - name: Generate Allure HTML Report
