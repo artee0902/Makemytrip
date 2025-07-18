@@ -40,7 +40,7 @@ jobs:
         run: |
           echo "Listing files in tests folder:"
           ls -l tests/
-          cat tests/config.json
+          cat config.json
 
       - name: Set headless mode for CI
         run: echo "HEADLESS=true" >> $GITHUB_ENV
