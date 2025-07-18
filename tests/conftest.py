@@ -6,8 +6,10 @@ from playwright.sync_api import sync_playwright
 # Load configuration from JSON
 @pytest.fixture(scope="session")
 def config():
-    with open("config.json") as f:
+    with open("../config.json") as f:
         return json.load(f)
+
+
 
 # Launch browser for the test session
 @pytest.fixture(scope="session")
